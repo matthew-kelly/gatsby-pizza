@@ -3,20 +3,23 @@ import React from 'react';
 import PizzaList from '../components/PizzaList';
 import ToppingsFilter from '../components/ToppingsFilter';
 
-export default function PizzasPage({ data }) {
+export default function PizzasPage({ data, pageContext }) {
   // NOTE: There is no loading state in gatsby! Don't have to wait for the data to return
   const pizzas = data.pizzas.nodes;
   return (
     <>
-      <ToppingsFilter />
+      <ToppingsFilter activeTopping={pageContext.topping} />
       <PizzaList pizzas={pizzas} />
     </>
   );
 }
 
 export const query = graphql`
-  query AllPizzasQuery {
-    pizzas: allSanityPizza {
+  query PizzaQuery($topping: [String]) {
+    # query PizzaQuery($toppingRegex: String) {
+    pizzas: allSanityPizza(
+      filter: { toppings: { elemMatch: { name: { in: $topping } } } } # filter: { toppings: { elemMatch: { name: { regex: $toppingRegex } } } }
+    ) {
       nodes {
         id
         name
