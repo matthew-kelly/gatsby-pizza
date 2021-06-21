@@ -34,4 +34,10 @@
     "javascriptreact"
   ],
   "peacock.color": "#FFC600",
+  "search.exclude": {
+    "**/.cache": true,
+    "**/.vscode": true,
+    "package-lock.json": true,
+    "**/page-data.json": true
+  }
 }
