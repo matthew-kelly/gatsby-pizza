@@ -1,2 +1,3 @@
 import React from 'react';
-import { wrapPageElement } from './gatsby-browser';
+import { OrderProvider } from './src/components/OrderContext';
+import { wrapPageElement, wrapRootElement } from './gatsby-browser';
