@@ -16,37 +16,59 @@ export default function OrderPage({ data }) {
   const { values, updateValue } = useForm({
     name: '',
     email: '',
+    mapleSyrup: '',
   });
-  const { order, addToOrder, removeFromOrder } = usePizza({
+  const {
+    order,
+    addToOrder,
+    removeFromOrder,
+    submitOrder,
+    error,
+    loading,
+    message,
+  } = usePizza({
     pizzas,
-    inputs: values,
+    values,
   });
+
+  if (message) {
+    return <h2>{message}</h2>;
+  }
+
   return (
     <>
       <SEO title="Order a Pizza" />
-      <OrderFormStyles>
-        <fieldset>
+      <OrderFormStyles onSubmit={submitOrder}>
+        <fieldset disabled={loading}>
           <legend>Your Info</legend>
-          <label htmlFor="name">
-            Name
-            <input
-              type="text"
-              name="name"
-              value={values.name}
-              onChange={updateValue}
-            />
-          </label>
-          <label htmlFor="email">
-            Email
-            <input
-              type="email"
-              name="email"
-              value={values.email}
-              onChange={updateValue}
-            />
-          </label>
+          <label htmlFor="name">Name</label>
+          <input
+            type="text"
+            name="name"
+            id="name"
+            // required
+            value={values.name}
+            onChange={updateValue}
+          />
+          <label htmlFor="email">Email</label>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            // required
+            value={values.email}
+            onChange={updateValue}
+          />
+          <input
+            className="mapleSyrup"
+            type="text"
+            name="mapleSyrup"
+            // required
+            value={values.mapleSyrup}
+            onChange={updateValue}
+          />
         </fieldset>
-        <fieldset className="menu">
+        <fieldset className="menu" disabled={loading}>
           <legend>Menu</legend>
           {pizzas.map((pizza) => (
             <MenuItemStyles key={pizza.id}>
@@ -74,13 +96,18 @@ export default function OrderPage({ data }) {
             </MenuItemStyles>
           ))}
         </fieldset>
-        <fieldset className="order">
+        <fieldset className="order" disabled={loading}>
           <legend>Order</legend>
           <PizzaOrder order={order} removeFromOrder={removeFromOrder} />
         </fieldset>
-        <fieldset>
+        <fieldset disabled={loading}>
           <h3>Your Total is {formatMoney(calculateOrderTotal(order))}</h3>
-          <button type="submit">Order Now</button>
+          <div>
+            {error ? <p style={{ color: 'red' }}>Error: {error}</p> : ''}
+          </div>
+          <button type="submit" disabled={loading}>
+            {loading ? 'Sending Order...' : 'Order Now'}
+          </button>
         </fieldset>
       </OrderFormStyles>
     </>
