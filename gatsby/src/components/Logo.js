@@ -102,7 +102,7 @@ export default function Logo() {
   return (
     <LogoStyles className="logo">
       <div className="inner">
-        <span className="est">EST 1995</span>
+        <span className="est">EST. 1995</span>
         <h1>
           <span className="slicks">
             <span className="letter S">S</span>
