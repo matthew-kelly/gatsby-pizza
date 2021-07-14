@@ -1,6 +1,18 @@
 import { useEffect, useState } from 'react';
 
 const gql = String.raw;
+const details = `
+  _id
+  name
+  image {
+    asset {
+      url
+      metadata {
+        lqip
+      }
+    }
+  }
+`;
 
 export default function useLatestData() {
   // hot slices
@@ -21,10 +33,10 @@ export default function useLatestData() {
             StoreSettings(id: "main-store") {
               name
               slicemaster {
-                name
+                ${details}
               }
               hotSlices {
-                name
+                ${details}
               }
             }
           }

@@ -31,13 +31,13 @@ const Typography = createGlobalStyle`
     display: inline;
     line-height: 1;
   }
-
-  .center {
-    text-align: center;
-  }
-
   .tilt {
     transform: rotate(-2deg);
+    position: relative;
+    display: inline-block;
+  }
+  .center {
+    text-align: center;
   }
 `;
 
